@@ -9,7 +9,7 @@ from keyboards import start_lang_selection, lang_selection
 from phrases_get_file import get_phrases
 
 
-# bot init
+# bot init / 230 sloc
 bot = Bot(token=config.token)
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
