@@ -1,0 +1,43 @@
+{
+  "ru": {
+    "already": "Я уже поздоровался... не пиши /start",
+    "lang_selected": "Выбран русский язык",
+    "hello": "привет, я sayfbot\n/help - чтобы увидеть все команды\n\n\uD83E\uDD77\uD83C\uDFFB создатель: @sayfdor \uD83E\uDD77\uD83C\uDFFB",
+    "help": [
+      "/h или /help - чтобы посмотреть все команды",
+      "/image *запрос* - получить картинку по запросу",
+      "/weather *место* - погода в данном месте в данный момент"
+    ],
+    "im_error": "/image запрос не получил арумент",
+    "im_desc": "Изображение по запросу: ",
+    "wr_error": "/weather запрос не получил аргумент",
+    "wr_search": "ЗАПРОС: ",
+    "wr_timezone": "ВРЕМЕННАЯ ЗОНА: ",
+    "wr_temp": "ТЕМПЕРАТУРА: ",
+    "wr_feels": "ОЩУЩАЕТСЯ КАК: ",
+    "wr_press": "ДАВЛЕНИЕ: ",
+    "wr_sky": "СОСТОЯНИЕ НЕБА: "
+  },
+  "en": {
+    "already": "I already said hello... don`t write /start",
+    "lang_selected": "English selected",
+    "hello": "hi, i`m sayfbot\n/help - to see all commands\n\n\uD83E\uDD77\uD83C\uDFFB powered by @sayfdor \uD83E\uDD77\uD83C\uDFFB",
+    "help": [
+      "/h or /help - to see all commands",
+      "/image *search* - get image by search",
+      "/weather *location* - get weather for the location"
+    ],
+    "im_error": "/image request has no argument",
+    "im_desc": "Image by request: ",
+    "wr_error": "/weather request has no argument",
+    "wr_search": "SEARCH: ",
+    "wr_timezone": "TIMEZONE: ",
+    "wr_temp": "TEMPERATURE: ",
+    "wr_feels": "TEMP FEELS LIKE: ",
+    "wr_press": "PRESSURES: ",
+    "wr_sky": "SKY: "
+  },
+  "other": {
+    "choose": "выбери язык/choose language"
+  }
+}
