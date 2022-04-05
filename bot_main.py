@@ -1,11 +1,16 @@
 import logging
 import config
+
+from aiogram import Bot, Dispatcher, executor, types
+from aiogram.utils.markdown import text, bold
+from aiogram.types import ParseMode
+
 from users_database import add_user, search_user, get_user_lang
 from image_parser import parse_image
 from place_parser import get_places_coord
+from currency_parser import get_currency_currate
 from weather_parser import parse_weather
-from aiogram import Bot, Dispatcher, executor, types
-from keyboards import start_lang_selection, lang_selection
+from keyboards import start_lang_selection, lang_selection, cur_keyboard
 from phrases_get_file import get_phrases
 
 
@@ -42,7 +47,10 @@ async def start_sel_lang_en(call: types.CallbackQuery):
 # /select_language
 @dp.message_handler(commands=['select_language'])
 async def select_lang(message: types.Message):
-    return await message.answer(get_phrases()['other']['choose'], reply_markup=lang_selection)
+    if search_user(message.from_user.id):
+        return await message.answer(get_phrases()['other']['choose'], reply_markup=lang_selection)
+    else:
+        return await message.answer(get_phrases()['other']['not_reg'])
 
 @dp.callback_query_handler(text="ru")
 async def sel_lang_ru(call: types.CallbackQuery):
@@ -70,31 +78,75 @@ async def get_help(message: types.Message):
 # /image command
 @dp.message_handler(commands='image')
 async def get_image(message: types.Message):
-    image_name = ' '.join(message.text.split(' ')[1::])
-    if len(image_name) == 0:
-        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['im_error'])
-    caption = f'{get_phrases()[f"{get_user_lang(message.from_user.id)}"]["im_desc"]}' + image_name
-    return await message.answer_photo(photo=parse_image(image_name), caption=caption)
+    if search_user(message.from_user.id):
+        image_name = ' '.join(message.text.split(' ')[1::])
+        if len(image_name) == 0:
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['im_error'])
+        caption = f'{get_phrases()[f"{get_user_lang(message.from_user.id)}"]["im_desc"]}' + image_name
+        return await message.answer_photo(photo=parse_image(image_name), caption=caption)
+    else:
+        return await message.answer(get_phrases()['other']['not_reg'])
 
 
 # /weather command
 @dp.message_handler(commands='weather')
 async def get_weather(message: types.Message):
-    place_name = ' '.join(message.text.split(' ')[1::])
-    user_lang_key = f'{get_user_lang(message.from_user.id)}'
-    user_key = get_phrases()[user_lang_key]
-    if len(place_name) == 0:
-        return await message.answer(get_phrases()[f'{user_lang_key}']['wr_error'])
-    place_coord = get_places_coord(place_name)
-    weather = parse_weather(place_coord)
-    weather_list = ['🔍 ' + user_key['wr_search'] + place_name,
-                    '🌎 ' + user_key['wr_timezone'] + weather["timezone"],
-                    '🌡 ' + user_key['wr_temp'] + weather["temp"],
-                    '🌡 ' + user_key['wr_feels'] + weather["temp_feels"],
-                    '📈 ' + user_key['wr_press'] + weather["pressure"],
-                    '⛅️ ' + user_key['wr_sky'] + weather[f"sky_{user_lang_key}"]]
-    weather_message = '\n\n'.join(weather_list)
-    return await message.answer(weather_message)
+    if search_user(message.from_user.id):
+        place_name = ' '.join(message.text.split(' ')[1::])
+        user_lang_key = f'{get_user_lang(message.from_user.id)}'
+        user_key = get_phrases()[user_lang_key]
+        if len(place_name) == 0:
+            return await message.answer(get_phrases()[f'{user_lang_key}']['wr_error'])
+        place_coord = get_places_coord(place_name)
+        weather = parse_weather(place_coord)
+        weather_list = ['🔍 ' + text(bold(user_key['wr_search'])) + place_name,
+                        '🌎 ' + text(bold(user_key['wr_timezone'])) + weather["timezone"],
+                        '🌡 ' + text(bold(user_key['wr_temp'])) + weather["temp"],
+                        '🌡 ' + text(bold(user_key['wr_feels'])) + weather["temp_feels"],
+                        '📈 ' + text(bold(user_key['wr_press'])) + weather["pressure"],
+                        '⛅️ ' + text(bold(user_key['wr_sky'])) + weather[f"sky_{user_lang_key}"]]
+        weather_message = '\n\n'.join(weather_list)
+        return await message.answer(weather_message, parse_mode=ParseMode.MARKDOWN)
+    else:
+        return await message.answer(get_phrases()['other']['not_reg'])
+
+# /currency command
+@dp.message_handler(commands='currency')
+async def get_currency(message: types.Message):
+    if search_user(message.from_user.id):
+        await message.answer('Выбери валюту', reply_markup=cur_keyboard)
+    else:
+        return await message.answer(get_phrases()['other']['not_reg'])
+
+@dp.callback_query_handler(text="USDRUB")
+async def cur_usd_rub(call: types.CallbackQuery):
+    await call.message.answer(get_currency_currate("USDRUB"))
+    await call.answer()
+
+@dp.callback_query_handler(text="USDEUR")
+async def cur_usd_rub(call: types.CallbackQuery):
+    await call.message.answer(get_currency_currate("USDEUR"))
+    await call.answer()
+
+@dp.callback_query_handler(text="EURRUB")
+async def cur_usd_rub(call: types.CallbackQuery):
+    await call.message.answer(get_currency_currate("EURRUB"))
+    await call.answer()
+
+@dp.callback_query_handler(text="RUBEUR")
+async def cur_usd_rub(call: types.CallbackQuery):
+    await call.message.answer(get_currency_currate("RUBEUR"))
+    await call.answer()
+
+@dp.callback_query_handler(text="EURUSD")
+async def cur_usd_rub(call: types.CallbackQuery):
+    await call.message.answer(get_currency_currate("EURUSD"))
+    await call.answer()
+
+@dp.callback_query_handler(text="RUBUSD")
+async def cur_usd_rub(call: types.CallbackQuery):
+    await call.message.answer(get_currency_currate("RUBUSD"))
+    await call.answer()
 
 
 if __name__ == '__main__':

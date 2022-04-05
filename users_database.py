@@ -21,14 +21,6 @@ def get_user_lang(user_id: int) -> str:
     lang = cursor.execute(f"SELECT user_lang FROM users WHERE user_id = {str(user_id)}")
     return lang.fetchall()[0][0]
 
-# in dev
-#
-# def add_user_lang(user_id: int, user_lang: str):
-#     try:
-#         cursor.execute(f'UPDATE users SET user_lang = ? WHERE user_id = ?', (user_lang, user_id))
-#     except Exception as E:
-#         print(E)
-
 
 if __name__ == '__main__':
     pass

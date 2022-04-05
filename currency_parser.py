@@ -1,6 +1,7 @@
 import requests
 import json
 import xmltodict
+import config
 
 # Центральный Банк России - https://www.cbr-xml-daily.ru/daily_json.js
 # Центральный Банк Европы - https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml
@@ -27,6 +28,11 @@ def central_european_bank() -> str:
     for currency in currencies_json_resp:
         all_curr.append(f'EUR -> {currency["@currency"]} {currency["@rate"]}')
     return '\n'.join(all_curr)
+
+def get_currency_currate(pair):
+    resp = requests.get('https://currate.ru/api/?',
+                        params={"get": "rates", "pairs": pair, "key": config.api_currate_key})
+    return resp.json()["data"][pair]
 
 
 if __name__ == '__main__':

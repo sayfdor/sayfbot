@@ -38,6 +38,7 @@
     "wr_sky": "SKY: "
   },
   "other": {
-    "choose": "выбери язык/choose language"
+    "choose": "выбери язык/choose language",
+    "not_reg": "я тебя не знаю, напиши /start\nI don't know you, write /start"
   }
 }
