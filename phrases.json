@@ -6,7 +6,10 @@
     "help": [
       "/h или /help - чтобы посмотреть все команды",
       "/image *запрос* - получить картинку по запросу",
-      "/weather *место* - погода в данном месте в данный момент"
+      "/weather *место* - погода в данном месте в данный момент",
+      "/set_city *город* - установка города, чтобы использовать /weather без аргумента (quick use)",
+      "/currency - получить выбранный денежный курс",
+      "/select_language - выбор языка, на котором бот будет общаться"
     ],
     "im_error": "/image запрос не получил арумент",
     "im_desc": "Изображение по запросу: ",
@@ -16,7 +19,10 @@
     "wr_temp": "ТЕМПЕРАТУРА: ",
     "wr_feels": "ОЩУЩАЕТСЯ КАК: ",
     "wr_press": "ДАВЛЕНИЕ: ",
-    "wr_sky": "СОСТОЯНИЕ НЕБА: "
+    "wr_sky": "СОСТОЯНИЕ НЕБА: ",
+    "set_city": "Установлен город: ",
+    "empty_city": "/set_city запрос не получил аргумент",
+    "reset_city": "Город по умолчанию сброшен"
   },
   "en": {
     "already": "I already said hello... don`t write /start",
@@ -25,7 +31,10 @@
     "help": [
       "/h or /help - to see all commands",
       "/image *search* - get image by search",
-      "/weather *location* - get weather for the location"
+      "/weather *location* - get weather for the location",
+      "/set_city - select a city for quick use /weather",
+      "/currency - return the selected exchange rate",
+      "/select_laguage - change language"
     ],
     "im_error": "/image request has no argument",
     "im_desc": "Image by request: ",
@@ -35,10 +44,14 @@
     "wr_temp": "TEMPERATURE: ",
     "wr_feels": "TEMP FEELS LIKE: ",
     "wr_press": "PRESSURES: ",
-    "wr_sky": "SKY: "
+    "wr_sky": "SKY: ",
+    "set_city": "Set city: ",
+    "empty_city": "/set_city request has no argument",
+    "reset_city": "Default city reset"
   },
   "other": {
-    "choose": "выбери язык/choose language",
-    "not_reg": "я тебя не знаю, напиши /start\nI don't know you, write /start"
+    "choose": "выбери язык\nchoose language",
+    "not_reg": "я тебя не знаю, напиши /start\nI don't know you, write /start",
+    "help_not_reg": "press /start\nнажми  /start"
   }
 }

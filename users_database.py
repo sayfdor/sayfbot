@@ -4,10 +4,22 @@ import sqlite3
 conn = sqlite3.connect('database/users_db.db', check_same_thread=False)
 cursor = conn.cursor()
 
-def add_user(user_id: int, user_name: str, user_surname: str, username: str, user_lang: str):
+cursor.execute("""CREATE TABLE IF NOT EXISTS users(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   user_id INT UNIQUE,
+   user_name TEXT,
+   user_surname TEXT,
+   username TEXT,
+   user_lang TEXT,
+   user_city TEXT);
+""")
+conn.commit()
+
+def add_user(user_id: int, user_name: str, user_surname: str, username: str, user_lang: str, user_city: str):
     try:
-        add_string = 'REPLACE INTO users (user_id, user_name, user_surname, username, user_lang) VALUES (?, ?, ?, ?, ?)'
-        cursor.execute(add_string, (user_id, user_name, user_surname, username, user_lang))
+        add_string = '''REPLACE INTO users (user_id, user_name, user_surname, username, user_lang, user_city)
+         VALUES (?, ?, ?, ?, ?, ?)'''
+        cursor.execute(add_string, (user_id, user_name, user_surname, username, user_lang, user_city))
         conn.commit()
     except Exception as E:
         print(E)
@@ -19,7 +31,11 @@ def search_user(user_id: int) -> bool:
 
 def get_user_lang(user_id: int) -> str:
     lang = cursor.execute(f"SELECT user_lang FROM users WHERE user_id = {str(user_id)}")
-    return lang.fetchall()[0][0]
+    return str(lang.fetchall()[0][0])
+
+def get_user_city(user_id: int) -> str:
+    city = cursor.execute(f"SELECT user_city FROM users WHERE user_id = {str(user_id)}")
+    return str(city.fetchall()[0][0])
 
 
 if __name__ == '__main__':
