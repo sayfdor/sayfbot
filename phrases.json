@@ -22,7 +22,8 @@
     "wr_sky": "СОСТОЯНИЕ НЕБА: ",
     "set_city": "Установлен город: ",
     "empty_city": "/set_city запрос не получил аргумент",
-    "reset_city": "Город по умолчанию сброшен"
+    "reset_city": "Город по умолчанию сброшен",
+    "set_cur": "Выбери курс"
   },
   "en": {
     "already": "I already said hello... don`t write /start",
@@ -47,7 +48,8 @@
     "wr_sky": "SKY: ",
     "set_city": "Set city: ",
     "empty_city": "/set_city request has no argument",
-    "reset_city": "Default city reset"
+    "reset_city": "Default city reset",
+    "set_cur": "Set currency"
   },
   "other": {
     "choose": "выбери язык\nchoose language",

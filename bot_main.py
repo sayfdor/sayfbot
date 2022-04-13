@@ -15,7 +15,7 @@ from phrases_get_file import get_phrases
 
 
 # bot init / 385 sloc
-bot = Bot(token=config.token)
+bot = Bot(token=config.TOKEN)
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
 
@@ -139,7 +139,8 @@ async def set_city(message: types.Message):
 @dp.message_handler(commands='currency')
 async def get_currency(message: types.Message):
     if search_user(message.from_user.id):
-        await message.answer('Выбери валюту', reply_markup=cur_keyboard)
+        await message.answer(get_phrases()[f"{get_user_lang(message.from_user.id)}"]['set_cur'],
+                             reply_markup=cur_keyboard)
     else:
         return await message.answer(get_phrases()['other']['not_reg'])
 

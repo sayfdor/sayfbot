@@ -2,7 +2,7 @@ import requests
 import config
 
 def get_places_coord(name):
-    api_key = config.api_geocoder_key
+    api_key = config.API_GEOCODER_KEY
     resp = requests.get('https://geocode-maps.yandex.ru/1.x/?',
                         params={'format': 'json', 'apikey': api_key, 'geocode': str(name)}).json()
     found = resp["response"]["GeoObjectCollection"]["metaDataProperty"]["GeocoderResponseMetaData"]["found"]

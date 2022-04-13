@@ -31,7 +31,7 @@ def central_european_bank() -> str:
 
 def get_currency_currate(pair):
     resp = requests.get('https://currate.ru/api/?',
-                        params={"get": "rates", "pairs": pair, "key": config.api_currate_key})
+                        params={"get": "rates", "pairs": pair, "key": config.API_CURRATE_KEY})
     return resp.json()["data"][pair]
 
 

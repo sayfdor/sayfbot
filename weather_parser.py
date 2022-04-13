@@ -2,7 +2,7 @@ import requests
 import config
 
 def parse_weather(lat_and_lon):
-    api_key = config.api_weather_key
+    api_key = config.API_WEATHER_KEY
 
     if type(lat_and_lon) != list:
         return '/weather argument (place) not found'
