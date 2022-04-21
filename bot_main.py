@@ -104,6 +104,8 @@ async def get_weather(message: types.Message):
             return await message.answer(get_phrases()[f'{user_lang_key}']['wr_error'])
         place_coord = get_places_coord(place_name)
         weather = parse_weather(place_coord)
+        if weather == '/weather argument (place) not found':
+            return await message.answer(get_phrases()[f'{user_lang_key}']['wr_ferror'])
         weather_list = ['🔍 ' + text(bold(user_key['wr_search'])) + place_name,
                         '🌎 ' + text(bold(user_key['wr_timezone'])) + weather["timezone"],
                         '🌡 ' + text(bold(user_key['wr_temp'])) + weather["temp"],
