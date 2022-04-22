@@ -3,12 +3,12 @@ import config
 
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.markdown import text, bold
-from aiogram.types import ParseMode
+from aiogram.types import ParseMode, InputFile
 
 from users_database import add_user, search_user, get_user_lang, get_user_city
 from image_parser import parse_image
 from place_parser import get_places_coord
-from currency_parser import get_currency_currate
+from currency_parser import get_currency_currate, get_currency_pcode, get_lineplot, get_currency_range
 from weather_parser import parse_weather
 from keyboards import start_lang_selection, lang_selection, cur_keyboard
 from phrases_get_file import get_phrases
@@ -137,9 +137,9 @@ async def set_city(message: types.Message):
     else:
         return await message.answer(get_phrases()['other']['not_reg'])
 
-# /currency command
+# /simple_currency command
 @dp.message_handler(commands='currency')
-async def get_currency(message: types.Message):
+async def get_simple_currency(message: types.Message):
     if search_user(message.from_user.id):
         await message.answer(get_phrases()[f"{get_user_lang(message.from_user.id)}"]['set_cur'],
                              reply_markup=cur_keyboard)
@@ -175,6 +175,30 @@ async def cur_usd_rub(call: types.CallbackQuery):
 async def cur_usd_rub(call: types.CallbackQuery):
     await call.message.answer(get_currency_currate("RUBUSD"))
     await call.answer()
+
+@dp.message_handler(commands='currency_plot')
+async def get_currency(message: types.Message):
+    if search_user(message.from_user.id):
+        message_args = message.text.split(' ')[1::]
+
+        if len(message_args) == 0:
+            return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['hcur_null_error'])
+
+        elif message_args[0] in ['all', '-a', 'a']:
+            return await message.answer(get_currency_pcode('all', get_user_lang(message.from_user.id)))
+
+        elif len(get_currency_pcode(message_args[0].upper())) != 0\
+                and get_currency_pcode(message_args[0].upper()) != 'error':
+            plot = get_lineplot(get_currency_range(message_args[0].upper(), message_args[1]), message.from_user.id)
+            if plot == ['error']:
+                return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['hcur_range_error'])
+            return await message.answer_photo(photo=InputFile(f"plots/{message.from_user.id}_plot.png"))
+
+        else:
+            return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['hcur_error'])
+
+    else:
+        return await message.answer(get_phrases()['other']['not_reg'])
 
 
 if __name__ == '__main__':
