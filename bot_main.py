@@ -12,9 +12,10 @@ from currency_parser import get_currency_currate, get_currency_pcode, get_linepl
 from weather_parser import parse_weather
 from keyboards import start_lang_selection, lang_selection, cur_keyboard
 from phrases_get_file import get_phrases
+from obscene_word_check import check
 
 
-# bot init / 385 sloc
+# bot init / 414 strings / 485 - strings + json file
 bot = Bot(token=config.TOKEN)
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
@@ -85,6 +86,8 @@ async def get_image(message: types.Message):
         image_name = ' '.join(message.text.split(' ')[1::])
         if len(image_name) == 0:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['im_error'])
+        elif check(image_name):
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
         caption = f'{get_phrases()[f"{get_user_lang(message.from_user.id)}"]["im_desc"]}' + image_name
         return await message.answer_photo(photo=parse_image(image_name), caption=caption)
     else:
@@ -98,6 +101,8 @@ async def get_weather(message: types.Message):
         place_name = ' '.join(message.text.split(' ')[1::])
         if len(place_name) == 0 and get_user_city(message.from_user.id) != 'not_set':
             place_name = get_user_city(message.from_user.id)
+        elif check(place_name):
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
         user_lang_key = f'{get_user_lang(message.from_user.id)}'
         user_key = get_phrases()[user_lang_key]
         if len(place_name) == 0:
@@ -127,6 +132,8 @@ async def set_city(message: types.Message):
                      message.from_user.last_name, message.from_user.username, get_user_lang(message.from_user.id),
                      'not_set')
             return await message.answer(get_phrases()[f"{get_user_lang(us_id)}"]['reset_city'])
+        elif check(message.get_args()):
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
         elif message.get_args() != '':
             add_user(message.from_user.id, message.from_user.first_name,
                      message.from_user.last_name, message.from_user.username, get_user_lang(message.from_user.id),
@@ -184,6 +191,9 @@ async def get_currency(message: types.Message):
         if len(message_args) == 0:
             return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['hcur_null_error'])
 
+        elif check(''.join(message_args)):
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
+
         elif message_args[0] in ['all', '-a', 'a']:
             return await message.answer(get_currency_pcode('all', get_user_lang(message.from_user.id)))
 
@@ -199,6 +209,12 @@ async def get_currency(message: types.Message):
 
     else:
         return await message.answer(get_phrases()['other']['not_reg'])
+
+@dp.message_handler()
+async def simple_message(message: types.Message):
+    if check(message.text):
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
+    return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['dont_speak'])
 
 
 if __name__ == '__main__':

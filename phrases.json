@@ -29,7 +29,9 @@
     "set_cur": "Выбери курс",
     "hcur_null_error": "Запрос /currency не получил аргумент",
     "hcur_error": "Введенная валюта не найдена",
-    "hcur_range_error": "Ой, ошибка. Мы уже ее исправляем!"
+    "hcur_range_error": "Ой, ошибка. Мы уже ее исправляем!",
+    "bad_word": "Что такое ты пишешь мне! Я культурный бот.",
+    "dont_speak": "Извини, я не искусственный интеллект и не умею вести полноценные диалоги... :("
   },
   "en": {
     "already": "I already said hello... write /help",
@@ -61,7 +63,9 @@
     "set_cur": "Set currency",
     "hcur_null_error": "/currency request has no argument",
     "hcur_error": "This valute not found",
-    "hcur_range_error": "Oops, error, we're trying to fix it!"
+    "hcur_range_error": "Oops, error, we're trying to fix it!",
+    "bad_word": "What are you writing?! I am a cultural bot.",
+    "dont_speak": "Sorry I'm not AI...("
   },
   "other": {
     "choose": "выбери язык\nchoose language",
