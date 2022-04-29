@@ -10,9 +10,8 @@ other_letter = {'а': ['а', 'a', '@'], 'б': ['б', '6', 'b'], 'в': ['в', 'v'
                 'я': ['я', 'ya']}
 
 obscene_words_cen = [[1089, 1091, 1082], [1087, 1080, 1079, 1076], [1076, 1072, 1091, 1085], [1093, 1091, 1081],
-                     [1093, 1091, 1077], [1077, 1073], [1085, 1072, 1093], [1087, 1086, 1093, 1091],
-                     [1087, 1086, 1088, 1085], [1087, 1086, 1088, 1077, 1074], [1084, 1080, 1085, 1077, 1090]]
-
+                     [1077, 1073], [1085, 1072, 1093], [1087, 1086, 1093, 1091], [1087, 1086, 1088, 1085],
+                     [1087, 1086, 1088, 1077, 1074], [1084, 1080, 1085, 1077, 1090]]
 
 def recensore(lst: list) -> list:
     obscene_words = []
@@ -36,7 +35,8 @@ def check(message: str) -> bool:
     for word in recensore(obscene_words_cen):
         for part in range(len(message)):
             fragment = message[part: part + len(word)]
-            if fuzz.WRatio(fragment, word) > 70:
+            if fuzz.WRatio(fragment, word) > 75 and len(fragment) > 3:
+                print(fragment, word)
                 return True
     return False
 

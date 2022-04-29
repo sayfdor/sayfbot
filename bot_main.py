@@ -229,7 +229,7 @@ async def get_currency(message: types.Message):
 @dp.message_handler()
 async def simple_message(message: types.Message):
     if not config.OFF_COMMANDS['simple_message']:
-        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
+        return None
     if check(message.text):
         return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
     return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['dont_speak'])
