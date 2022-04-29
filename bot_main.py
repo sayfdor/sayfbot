@@ -23,6 +23,8 @@ logging.basicConfig(level=logging.INFO)
 # /start command
 @dp.message_handler(commands="start")
 async def start_select_lang(message: types.Message):
+    if not config.OFF_COMMANDS['start']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['already'])
     return await message.answer(get_phrases()['other']['choose'], reply_markup=start_lang_selection)
@@ -48,6 +50,8 @@ async def start_sel_lang_en(call: types.CallbackQuery):
 # /select_language command
 @dp.message_handler(commands=['select_language'])
 async def select_lang(message: types.Message):
+    if not config.OFF_COMMANDS['sel_lang']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         return await message.answer(get_phrases()['other']['choose'], reply_markup=lang_selection)
     else:
@@ -72,6 +76,8 @@ async def sel_lang_ru(call: types.CallbackQuery):
 # /help command
 @dp.message_handler(commands=['h', 'help'])
 async def get_help(message: types.Message):
+    if not config.OFF_COMMANDS['simple_message']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         commands_block = get_phrases()[f'{get_user_lang(message.from_user.id)}']['help']
         return await message.answer('\n'.join(commands_block))
@@ -82,6 +88,8 @@ async def get_help(message: types.Message):
 # /image command
 @dp.message_handler(commands='image')
 async def get_image(message: types.Message):
+    if not config.OFF_COMMANDS['image']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         image_name = ' '.join(message.text.split(' ')[1::])
         if len(image_name) == 0:
@@ -97,6 +105,8 @@ async def get_image(message: types.Message):
 # /weather command
 @dp.message_handler(commands='weather')
 async def get_weather(message: types.Message):
+    if not config.OFF_COMMANDS['weather']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         place_name = ' '.join(message.text.split(' ')[1::])
         if len(place_name) == 0 and get_user_city(message.from_user.id) != 'not_set':
@@ -125,6 +135,8 @@ async def get_weather(message: types.Message):
 # /set_city command
 @dp.message_handler(commands='set_city')
 async def set_city(message: types.Message):
+    if not config.OFF_COMMANDS['set_city']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         us_id = message.from_user.id
         if message.get_args() == 'reset':
@@ -147,6 +159,8 @@ async def set_city(message: types.Message):
 # /simple_currency command
 @dp.message_handler(commands='currency')
 async def get_simple_currency(message: types.Message):
+    if not config.OFF_COMMANDS['currency']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         await message.answer(get_phrases()[f"{get_user_lang(message.from_user.id)}"]['set_cur'],
                              reply_markup=cur_keyboard)
@@ -185,6 +199,8 @@ async def cur_usd_rub(call: types.CallbackQuery):
 
 @dp.message_handler(commands='currency_plot')
 async def get_currency(message: types.Message):
+    if not config.OFF_COMMANDS['currency_plot']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if search_user(message.from_user.id):
         message_args = message.text.split(' ')[1::]
 
@@ -212,6 +228,8 @@ async def get_currency(message: types.Message):
 
 @dp.message_handler()
 async def simple_message(message: types.Message):
+    if not config.OFF_COMMANDS['simple_message']:
+        return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
     if check(message.text):
         return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
     return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['dont_speak'])
