@@ -28,9 +28,9 @@ def replace_letters(message: str) -> str:
     message = message.lower().replace(' ', '')
     for key, value in other_letter.items():
         for letter in value:
-            for phr in message:
-                if letter == phr:
-                    message = message.replace(phr, key)
+            for phrase in message:
+                if letter == phrase:
+                    message = message.replace(phrase, key)
     return message
 
 def check(message: str) -> bool:
