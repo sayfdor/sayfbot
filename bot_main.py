@@ -24,7 +24,7 @@ logging.basicConfig(level=logging.INFO)
 @dp.message_handler(commands="start")
 async def start_select_lang(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['start']:
+        if not config.OFF_ON_COMMANDS['start']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['already'])
     return await message.answer(get_phrases()['other']['choose'], reply_markup=start_lang_selection)
@@ -51,7 +51,7 @@ async def start_sel_lang_en(call: types.CallbackQuery):
 @dp.message_handler(commands=['select_language'])
 async def select_lang(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['sel_lang']:
+        if not config.OFF_ON_COMMANDS['sel_lang']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         return await message.answer(get_phrases()['other']['choose'], reply_markup=lang_selection)
     else:
@@ -70,7 +70,7 @@ async def sel_lang_ru(call: types.CallbackQuery):
 async def sel_lang_ru(call: types.CallbackQuery):
     add_user(call.from_user.id, call.from_user.first_name,
              call.from_user.last_name, call.from_user.username,
-             'ru', get_user_city(call.from_user.id), get_user_violation(call.from_user.id))
+             'en', get_user_city(call.from_user.id), get_user_violation(call.from_user.id))
     await call.message.answer(get_phrases()['en']['lang_selected'])
     await call.answer()
     await bot.delete_message(chat_id=call.from_user.id, message_id=call.message.message_id)
@@ -79,7 +79,7 @@ async def sel_lang_ru(call: types.CallbackQuery):
 @dp.message_handler(commands=['h', 'help'])
 async def get_help(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['help']:
+        if not config.OFF_ON_COMMANDS['help']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         if get_user_violation(message.from_user.id, 'bool'):
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
@@ -93,7 +93,7 @@ async def get_help(message: types.Message):
 @dp.message_handler(commands='image')
 async def get_image(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['image']:
+        if not config.OFF_ON_COMMANDS['image']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         if get_user_violation(message.from_user.id, 'bool'):
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
@@ -116,7 +116,7 @@ async def get_image(message: types.Message):
 @dp.message_handler(commands='weather')
 async def get_weather(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['weather']:
+        if not config.OFF_ON_COMMANDS['weather']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         if get_user_violation(message.from_user.id, 'bool'):
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
@@ -152,7 +152,7 @@ async def get_weather(message: types.Message):
 @dp.message_handler(commands='set_city')
 async def set_city(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['set_city']:
+        if not config.OFF_ON_COMMANDS['set_city']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         if get_user_violation(message.from_user.id, 'bool'):
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
@@ -182,7 +182,7 @@ async def set_city(message: types.Message):
 @dp.message_handler(commands='currency')
 async def get_simple_currency(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['currency']:
+        if not config.OFF_ON_COMMANDS['currency']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         if get_user_violation(message.from_user.id, 'bool'):
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
@@ -224,7 +224,7 @@ async def cur_usd_rub(call: types.CallbackQuery):
 @dp.message_handler(commands='currency_plot')
 async def get_currency(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['currency_plot']:
+        if not config.OFF_ON_COMMANDS['currency_plot']:
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
         if get_user_violation(message.from_user.id, 'bool'):
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
@@ -259,7 +259,7 @@ async def get_currency(message: types.Message):
 @dp.message_handler()
 async def simple_message(message: types.Message):
     if search_user(message.from_user.id):
-        if not config.OFF_COMMANDS['simple_message']:
+        if not config.OFF_ON_COMMANDS['simple_message']:
             return None
         if get_user_violation(message.from_user.id, 'bool'):
             return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
