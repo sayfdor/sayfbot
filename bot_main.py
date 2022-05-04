@@ -2,7 +2,7 @@ import logging
 import config
 
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.utils.markdown import text, bold
+from aiogram.utils.markdown import text, bold, code
 from aiogram.types import ParseMode, InputFile
 
 from users_database import add_user, search_user, get_user_lang, get_user_city, get_user_violation
@@ -253,6 +253,27 @@ async def get_currency(message: types.Message):
         else:
             return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['hcur_error'])
 
+    else:
+        return await message.answer(get_phrases()['other']['not_reg'])
+
+@dp.message_handler(commands='feedback')
+async def feedback(message: types.Message):
+    if search_user(message.from_user.id):
+        if not config.OFF_ON_COMMANDS['feedback']:
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['comm_off'])
+        if get_user_violation(message.from_user.id, 'bool'):
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['banned'])
+        if check(message.text):
+            add_user(message.from_user.id, message.from_user.first_name,
+                     message.from_user.last_name, message.from_user.username,
+                     get_user_lang(message.from_user.id), get_user_city(message.from_user.id),
+                     get_user_violation(message.from_user.id) + 1)
+            return await message.answer(get_phrases()[f'{get_user_lang(message.from_user.id)}']['bad_word'])
+        feedback_text = [text(bold('FEEDBACK')),
+                         f'Пользователь @{message.from_user.username}, {text(code(message.from_user.id))}',
+                         'оставил отзыв или предложение:', text(bold(f'{message.get_args()}'))]
+        await bot.send_message(config.FEEDBACK_CHAT_ID, '\n'.join(feedback_text), parse_mode=ParseMode.MARKDOWN)
+        return await message.answer(get_phrases()[get_user_lang(message.from_user.id)]['feedback_send'])
     else:
         return await message.answer(get_phrases()['other']['not_reg'])
 

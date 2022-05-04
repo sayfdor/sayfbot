@@ -8,10 +8,13 @@
       "/image *запрос* - получить картинку по запросу",
       "/weather *место* - погода в данном месте в данный момент",
       "/set_city *город* - установка города, чтобы использовать /weather без аргумента (quick use)",
+      "/set_city reset - сбросить город по умолчанию",
       "/currency - получить выбранный денежный курс",
       "/select_language - выбор языка, на котором бот будет общаться",
       "/currency_plot *код валюты* *дата* - получить график изменения валюты с введенной даты до настоящего времени",
-      "/currency_plot пример аргументов: USD - код, 12/12/2012 - дата"
+      "/currency_plot пример аргументов: USD - код, 12/12/2012 - дата",
+      "/currency_plot all - получить список всех валют",
+      "/feedback - оставить отзыв или предложение"
     ],
     "im_error": "/image запрос не получил арумент",
     "im_desc": "Изображение по запросу: ",
@@ -33,7 +36,8 @@
     "bad_word": "Что такое ты пишешь мне! Я культурный бот. Ещё немного, и я забаню тебя.",
     "dont_speak": "Извини, я не искусственный интеллект и не умею вести полноценные диалоги... :(",
     "comm_off": "Эта функция бота на данный момент отключена",
-    "banned": "Вы были забанены.\nС вопросами писать сюда: @sayfdor"
+    "banned": "Вы были забанены.\nС вопросами писать сюда: @sayfdor",
+    "feedback_send": "Спасибо за отзыв!"
   },
   "en": {
     "already": "I already said hello... write /help",
@@ -44,10 +48,13 @@
       "/image *search* - get image by search",
       "/weather *location* - get weather for the location",
       "/set_city - select a city for quick use /weather",
+      "/set_city reset - reset city to null",
       "/currency - return the selected exchange rate",
       "/select_language - change language",
       "/currency_plot *currency code* *date* - return a linear plot of the selected currency from the entered date to the present time",
-      "/currency_plot arguments example: USD - code, 12/12/2012 - date"
+      "/currency_plot arguments example: USD - code, 12/12/2012 - date",
+      "/currency_plot all - get a list of all currencies",
+      "/feedback - send feedback"
     ],
     "im_error": "/image request has no argument",
     "im_desc": "Image by request: ",
@@ -69,7 +76,8 @@
     "bad_word": "What are you writing?! I am a cultural bot. A little more and I'll ban you",
     "dont_speak": "Sorry, I'm not an AI and I can't have dialogues... :(",
     "comm_off": "This bot feature is currently disabled",
-    "banned": "Нou have been banned.\nFor Q&A: @sayfdor"
+    "banned": "Нou have been banned.\nFor Q&A: @sayfdor",
+    "feedback_send": "Thanks for the feedback!"
   },
   "other": {
     "choose": "выбери язык\nchoose language",
