@@ -15,7 +15,7 @@ from phrases_get_file import get_phrases
 from obscene_word_check import check
 
 
-# bot init / 414 strings / 485 - strings + json file
+# bot init
 bot = Bot(token=config.TOKEN)
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)

@@ -1,4 +1,5 @@
 import sqlite3
+import config
 
 # users database init
 conn = sqlite3.connect('database/users_db.db', check_same_thread=False)
@@ -47,7 +48,7 @@ def get_user_violation(user_id: int, out='int') -> int:
     if out == 'int':
         return int(violation_count.fetchall()[0][0])
     elif out == 'bool':
-        return int(violation_count.fetchall()[0][0]) > 5
+        return int(violation_count.fetchall()[0][0]) > config.VIOLATION
 
 
 if __name__ == '__main__':
